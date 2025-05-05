@@ -1,0 +1,45 @@
+graph TD
+    subgraph "Python Backend"
+        A[Flask API Server] --> B[SQLite Database]
+        A --> C[Notification Service]
+        C --> A
+    end
+
+    subgraph "Electron/React Frontend"
+        D[Electron Main Process] --> E[React Components]
+        D --> F[System Tray]
+        D --> G[Desktop Notifications]
+        E --> H[Tweet Viewer]
+        E --> I[Tweet Importer]
+        E --> J[Tweetbook Manager]
+        E --> K[Settings]
+    end
+
+    A <--API Calls--> D
+    
+    subgraph "Data Flow"
+        L[User saves tweet] --> I
+        I --> A
+        A --> B
+        C --> G
+        C --Random Tweet--> E
+        H --Display Tweets--> E
+    end
+    
+    subgraph "User Interactions"
+        M[User views tweets] --> H
+        N[User changes settings] --> K
+        K --> A
+        O[User creates tweetbook] --> J
+        J --> A
+    end
+
+    classDef backend fill:#b5e2fa,stroke:#0077b6
+    classDef frontend fill:#f8edeb,stroke:#d00000
+    classDef dataflow fill:#d8e2dc,stroke:#2a9d8f
+    classDef interaction fill:#e9c46a,stroke:#f4a261
+    
+    class A,B,C backend
+    class D,E,F,G,H,I,J,K frontend
+    class L dataflow
+    class M,N,O interaction
